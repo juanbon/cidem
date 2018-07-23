@@ -1,0 +1,1 @@
+<a href="{{ url('admin/line/'.$entry->getKey().'/preview') }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i>Ver</a>
