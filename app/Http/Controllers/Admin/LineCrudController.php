@@ -8,12 +8,13 @@ use App\Models\FinancingType;
 use App\Models\Modality;
 use App\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
-/*
+
 use App\Http\Requests\LineRequest as StoreRequest;
-use App\Http\Requests\LineRequest as UpdateRequest;  */
+use App\Http\Requests\LineRequest as UpdateRequest;  
+
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -300,9 +301,17 @@ class LineCrudController extends CrudController {
         // $this->crud->enableExportButtons();
         
         // ------ ADVANCED QUERIES
+        
+
+
+/*
         if (backpack_auth()->user()->hasRole(User::ROLE_USER)) {
             $this->crud->addClause('where', 'is_enabled');
         }
+
+*/
+
+
         // $this->crud->addClause('type', 'car');
         // $this->crud->addClause('where', 'name', '==', 'car');
         // $this->crud->addClause('whereName', 'car');
@@ -317,9 +326,7 @@ class LineCrudController extends CrudController {
         // $this->crud->limit();
     }
     
-    public function store(Request $request) {  // StoreRequest
-
-
+    public function store(StoreRequest $request) {  // StoreRequest
 
         // your additional operations before save here
         $redirect_location = parent::storeCrud($request);

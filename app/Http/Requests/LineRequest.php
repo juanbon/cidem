@@ -25,8 +25,16 @@ class LineRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-             'name' => 'required|min:5|max:255'
-             'institucion' => 'required|min:5|max:255'
+                'name' => 'required|min:5|max:255',
+                'institucion' => 'required|min:5|max:255',
+                'modality_id' => 'required',
+                'dead_line' => 'required',
+                'recipients[]' => 'required',
+                'description' => 'required',
+                'areas[]' => 'required',
+                'financing_type_id' => 'required',
+                'info' => 'required',
+                'web' => 'required'
         ];
     }
 

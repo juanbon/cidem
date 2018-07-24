@@ -41,9 +41,23 @@
     <link href="{{ URL::to('/') }}/css/style.css" rel="stylesheet">
 
 
-
-
 <style>
+
+
+body[class^='skin-purple'] .btn-primary {
+    color: #fff;
+    background-color: #00d1b2 !important;
+    border-color: #00d1b2;
+}
+
+
+.btn-primary:active,.btn-primary.hover{    background-color: #00B49A !important;
+    border-color: #00B49A !important;}
+
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    color: white; 
+
+}
 
 .footer{
 background-color:#FAFAFA !important; 

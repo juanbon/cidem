@@ -82,6 +82,7 @@ class ComposerStaticInitf42f667c60442642e465b3e19a36c682
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
+            'Laraveles\\Spanish\\' => 18,
             'Laravel\\Tinker\\' => 15,
             'Laracasts\\Generators\\' => 21,
         ),
@@ -269,6 +270,10 @@ class ComposerStaticInitf42f667c60442642e465b3e19a36c682
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Laraveles\\Spanish\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laraveles/spanish/src',
         ),
         'Laravel\\Tinker\\' => 
         array (
