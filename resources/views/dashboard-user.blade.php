@@ -41,7 +41,7 @@
               <div class="card">
               <div class="card-content has-text-centered">
                 <p class="title">
-                  <a href="#">
+                  <a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}">
                     <span class="icon has-text-primary">
                     <i class="fas fa-2x fa-user"></i>
                   </span>
@@ -51,7 +51,7 @@
               </div>
               <footer class="card-footer">
                 <p class="card-footer-item">
-                  <a href="#" class="has-text-primary">
+                  <a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}" class="has-text-primary">
                     Control del Usuario
                   </a>
                 </p>

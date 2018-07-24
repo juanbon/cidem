@@ -43,11 +43,40 @@
 
 <style>
 
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+
+    background-color: #00B49A !important;
+}
+
+.fa{
+  font-weight: initial !important;
+      font: normal normal normal 14px/1 FontAwesome !important;
+}
+.container-fluid {
+    width: 100% !important;
+}
+
+.content ul {
+    margin-left: 8em !important;
+
+}
+
+body[class^='skin-purple'] .pagination>.active>a, body[class^='skin-purple'] .pagination>.active>a:focus, body[class^='skin-purple'] .pagination>.active>a:hover, body[class^='skin-purple'] .pagination>.active>span, body[class^='skin-purple'] .pagination>.active>span:focus, body[class^='skin-purple'] .pagination>.active>span:hover {
+    background-color: #00B49A !important;
+    border-color: #00B49A !important;
+}
+
+body[class^='skin-purple'] .btn-primary:focus,
+body[class^='skin-purple'] .btn-primary.focus {
+  color: #fff;
+  background-color: #00B49A !important;
+  border-color: #00B49A !important;
+}
 
 body[class^='skin-purple'] .btn-primary {
     color: #fff;
-    background-color: #00d1b2 !important;
-    border-color: #00d1b2;
+    background-color: #00B49A !important;
+    border-color: #00B49A;
 }
 
 
@@ -100,6 +129,10 @@ background-color:#FAFAFA !important;
     <![endif]-->
 </head>
 <body class="hold-transition {{ config('backpack.base.skin') }} sidebar-mini">
+
+      <!-- jQuery 2.2.0 -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
 	<script type="text/javascript">
 		/* Recover sidebar state */
 		(function () {
@@ -293,8 +326,6 @@ if (!\Request::is('admin/login')) {
 
     @yield('before_scripts')
 
-    <!-- jQuery 2.2.0 -->
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script>window.jQuery || document.write('<script src="{{ asset('vendor/adminlte') }}/plugins/jQuery/jQuery-2.2.0.min.js"><\/script>')</script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset('vendor/adminlte') }}/bootstrap/js/bootstrap.min.js"></script>
