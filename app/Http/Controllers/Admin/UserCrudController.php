@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use Illuminate\Http\Request;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Requests\CrudRequest;
 use Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest as StoreRequest;
@@ -12,6 +13,12 @@ class UserCrudController extends CrudController
 {
     public function setup()
     {
+
+        /*
+        var_dump(User::statusArray()); 
+        exit;
+        */
+
         /*
         |--------------------------------------------------------------------------
         | BASIC CRUD INFORMATION
@@ -172,6 +179,45 @@ class UserCrudController extends CrudController
         return parent::updateCrud($request);
     }
     
+
+
+
+
+    public function getUser(){
+
+
+        $data = array();
+
+        foreach (User::all()->toArray() as $key => $value) {
+            $data[$value['id']] = $value;
+        }
+
+        echo json_encode(array(
+            "status"   => "ok",
+            "data"     => $data,
+            "hability" => User::statusArray()
+        ));
+
+        exit; 
+
+    }
+
+
+    public function updateUser(Request $request){
+
+
+        if ($request->all()) {
+            $user = User::find($request->id_user);
+            $user->status = $request->status;
+            $user->save();
+            return response()->json(['success' => 'success', 200]);
+        }
+
+    }
+
+
+
+
     /**
      * Handle password input fields.
      *

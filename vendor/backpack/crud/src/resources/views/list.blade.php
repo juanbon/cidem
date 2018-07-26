@@ -1,5 +1,5 @@
 @extends('backpack::layout')
-
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 @section('header')
 	<section class="content-header">
 	  <h1>
@@ -34,6 +34,13 @@
         @if ($crud->filtersEnabled())
           @include('crud::inc.filters_navbar')
         @endif
+
+
+
+<div class="callout callout-success" style="font-size: 13.7px;height: 50px;background-color:#00B49A !important;display:none">
+        <h4>La habilitaci&oacute;n del usuario se actualizo correctamente</h4>
+
+    </div>
 
         <table id="crudTable" class="table table-striped table-hover display responsive nowrap" cellspacing="0">
             <thead>
@@ -78,6 +85,10 @@
 
   </div>
 
+
+
+  <?php /* echo  if(\Request::route()->getName() == "crud.user.index") */ ?>
+
 @endsection
 
 @section('after_styles')
@@ -103,3 +114,190 @@
   <!-- CRUD LIST CONTENT - crud_list_scripts stack -->
   @stack('crud_list_scripts')
 @endsection
+
+<?php 
+
+if(\Request::route()->getName() == "crud.user.index"){ 
+
+ $user = \Auth::user();
+
+if(($user)AND(!$user->hasRole('admin') )){     ?>
+
+
+<style>
+
+.callout.callout-success {
+    border-color: #009C86 !important;
+}
+
+td:nth-child(5){
+
+  color:#FFFFFF;
+
+}
+
+td{
+
+ background-color:#FFFFFF;
+}
+
+
+</style>
+<script>
+
+function verify(){
+
+  setTimeout(function(){ 
+
+  $(".btn-default").each(function( index, element ) {
+
+  store = $(element).attr("href");
+
+  upd =store.split("user/");
+
+  if(upd){
+
+      if(upd[1]){
+
+          ra = upd[1];
+
+          tt = ra.split("/edit");
+
+           $(element).parent().prev().prev().prev().prev().addClass("allSelector selector_"+tt[0]);
+           $(element).parent().prev().prev().prev().prev().attr("data-visor",tt[0]);
+
+
+        }
+
+      }
+
+      });
+
+
+        //  data: { profile_id :'profile_id');?>},
+
+        var request = $.ajax({
+          url: '{{ URL::to('/') }}/admin/ajax/getUser',
+          method: "GET",
+          dataType: "json"
+        });
+         
+        request.done(function( obj ) {
+
+            if(obj.status == "ok"){
+
+              // console.log(obj);
+
+              ee = obj.data;
+              ff = obj.hability;
+
+            //  console.log(ee);
+
+
+              $.each(ee,function( index, element ) {
+
+                $("tr td:nth-child(5)").css("color","#363636");
+
+                // console.log(element.status);
+
+                $.each($(".allSelector"),function(a,b){
+
+
+                  visor = $(this).data("visor");
+
+                  cc = "<select onchange='setStatus(this)' >";
+
+                  $.each(ff,function(c,d){
+
+                  //  console.log(ee.status+"assssssss");
+
+                    gr = (ee[visor].status==c)?"selected":"";
+
+                    cc +="<option "+gr+" value='"+c+"' >"+d+"</option>";
+
+                  });
+
+
+                  cc +="</select>"; 
+
+                  $(this).html(cc);
+
+
+                });
+
+
+              });
+
+
+
+            }
+
+
+        });
+
+
+
+    }, 1000);
+
+
+}
+
+
+
+function setStatus(data){
+
+
+
+        $.ajax({
+
+            data: { id_user :$(data).parent().data("visor"),status:$(data).val()},
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            dataType: 'json',
+            url: '{{ URL::to('/') }}/admin/ajax/UpdateUser',
+            type:'POST',
+            success:  function (data) {
+
+
+              if(data.success=="success"){
+
+                $(".callout").slideDown();
+
+
+                setTimeout(function(){  $(".callout").slideUp(); }, 5000);
+
+              }
+
+            }
+        });
+
+}
+
+
+$(document).ready(function(){  
+
+
+    verify();
+
+    $('tr:first').on("click",function(){
+
+    verify();
+
+
+});
+
+
+
+
+
+});
+
+</script>
+
+
+<?php }
+
+
+} ?>
+
