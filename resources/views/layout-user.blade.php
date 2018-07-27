@@ -53,7 +53,7 @@
 					      <a class="navbar-item">
 					        Administración
 					      </a>
-					      <a class="navbar-item">
+					      <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}" >
 					        Control de usuario
 					      </a>
 					       <a class="navbar-item">
@@ -63,11 +63,11 @@
 					        	Vista - Usuarios
 					        </a>
 					      <hr class="navbar-divider">
-					      <a class="navbar-item">
+					      <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines/create') }}">
 					        Nueva fuente
 					      </a>
 					      
-					        <a class="navbar-item">
+					        <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines') }}">
 					        	Editar fuente
 					        </a>
 

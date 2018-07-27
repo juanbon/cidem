@@ -34,7 +34,7 @@
     <?php  $user = \Auth::user();
 
 
-    if(($user)AND(!$user->hasRole('admin') )){     ?>
+    if((($user)AND(!$user->hasRole('admin') )) OR ( \Request::route()->getName() =="backpack.auth.register") ){     ?>
 
 
     <link href="{{ URL::to('/') }}/css/bulma.css" rel="stylesheet">
@@ -209,11 +209,13 @@ if (!\Request::is('admin/login')) {
                 <i class="fas fa-bars"></i>
               </a>
 
-              <div class="navbar-dropdown is-right">
+              <div class="navbar-dropdown is-right" style="
+    z-index: 99;
+">
                 <a class="navbar-item">
                   Administración
                 </a>
-                <a class="navbar-item">
+                <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}">
                   Control de usuario
                 </a>
                  <a class="navbar-item">
@@ -223,11 +225,11 @@ if (!\Request::is('admin/login')) {
                     Vista - Usuarios
                   </a>
                 <hr class="navbar-divider">
-                <a class="navbar-item">
+                <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines/create') }}">
                   Nueva fuente
                 </a>
                 
-                  <a class="navbar-item">
+                  <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines') }}" >
                     Editar fuente
                   </a>
 
