@@ -31,8 +31,8 @@
 				@endif
 		  		>
 		  {!! csrf_field() !!}
-		  <div class="box">
 
+		  <div class="box">
 		    <div class="box-header with-border">
 		      <h3 class="box-title">{{ trans('backpack::crud.add_a_new') }} {{ $crud->entity_name }}</h3>
 		    </div>
@@ -54,5 +54,26 @@
 		  </form>
 	</div>
 </div>
+<?php  if(\Request::route()->getName() == "crud.user.create"){ ?>
+<style>
 
+.checklist_dependency{
+	height:300px !important;
+}
+
+</style>
+<script>
+$(document).ready(function(){
+
+
+
+$(".checklist_dependency").append('<div class="row" style="margin-top: 12px;"> <div class="col-xs-12"> <label>Permiso sobre destinatarios</label> </div><div class="hidden_fields_secondary" data-name="permissions"> </div><div class="col-xs-12"> <div class="checkbox"> <select multiple="" name="status" style="width: 100%" class="form-control select2_from_array"> <option value="0" selected="">Pendiente</option> <option value="1">Aceptada</option> <option value="2">Rechazada</option> </select> </div></div><div class="col-sm-4"> <div class="checkbox"> <label> <input type="checkbox" class="secondary_list" data-id="1" label="Permiso" name="permissions_show[]" entity="permissions" entity_primary="roles" attribute="name" model="Backpack\PermissionManager\app\Models\Permission" pivot="1" number_columns="3" value="1">activar acciones (CRUD)</label> </div></div></div>');
+
+
+console.log("una prueba ddasda dasdasdas dfasjfasdkfjsafsdf ");
+
+
+});
+</script>
+<?php }  ?>
 @endsection

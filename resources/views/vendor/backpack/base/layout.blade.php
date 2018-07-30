@@ -209,9 +209,7 @@ if (!\Request::is('admin/login')) {
                 <i class="fas fa-bars"></i>
               </a>
 
-              <div class="navbar-dropdown is-right" style="
-    z-index: 99;
-">
+              <div class="navbar-dropdown is-right" style="z-index: 99;">
                 <a class="navbar-item">
                   Administración
                 </a>

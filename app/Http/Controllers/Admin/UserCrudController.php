@@ -80,6 +80,7 @@ class UserCrudController extends CrudController
         ]);
         
         // Fields
+        
         $this->crud->addFields([
             [
                 'name'  => 'name',
