@@ -125,10 +125,10 @@ function AcadePermi(e){
 todesJson = JSON.parse($(".valuejson").val());
 
 
+	// $(".selectedRec").html("");
 
-console.log(todesJson);
 
-	console.log($(e).val()+" 333333");
+	console.log($(e).val());
 
 
  if($(e).val()){
@@ -139,34 +139,11 @@ console.log(todesJson);
 				opciones = $(e).val();
 
 
-
-				//  $(".filtroscon")  TIENEN NUMERO 
-
 				$.each($(".filtroscon"),function(e,f){
 
-
-					console.log("control");
-
-					console.log(opciones);
-
-					console.log($(this).data('number')+"aaaaaaaaaaaaaaaa");
-
-					console.log("control");
-
-					bienal = $(this).data('number');
-
-
-					if(opciones.includes(bienal.toString())){
+					if(opciones.includes($(this).data('number'))){
 
 					}else{
-
-						console.log("ELIMINADO");
-
-						console.log($(this).data('number')+"22222222222");
-
-
-
-						console.log(this);
 
 						$(this).remove();
 					}
@@ -176,68 +153,11 @@ console.log(todesJson);
 
 
 
-
-
-
 				$.each(opciones,function(c,d){
-
-
-
-					console.log("corredor "+d);
 
 					 if(!$('.item_'+c).length ){
 
-
-					 		console.log("corredor2 "+d);
-
-					 	// $('#checkArray:checkbox:checked')
-
-
-					 	//  contar elementos existengnte 
-
-					 	if($(".filtroscon").length==0){
-
-					 	//	 if( (!$('.item_'+c+':checked')) && ($('.item_'+c).length == 0) ) {
-
-							$(".selectedRec").append("<li data-number='"+d+"' class='item_"+c+" filtroscon'>"+todesJson[d]+"<input class='vida_"+c+"' style='margin-left:20px' type='checkbox'> Crud "+Date.now()+"</li>");
-
-						//	}
-
-
-						}else{
-
-							console.log("entro por el otro");
-
-//  if(!$('.item_'+c+':checked')){
-
-						if( ($('.vida_'+c+':checked')) && ($('.vida_'+c).length > 0) ) {
-
-
-							console.log("hay un checkado");
-
-
-						}else{
-
-// 							if(!$('.vida_'+c+':checked')){
-
-					 	console.log(c+" imprimeee");
-
-						// 	if(c!=0){
-
-							if($('.vida_'+c).length == 0){
-
-								console.log("CTM "+d);
-
-
-							$(".selectedRec").append("<li data-number='"+d+"' class='item_"+c+" filtroscon'>"+todesJson[d]+"<input class='vida_"+c+"' style='margin-left:20px' type='checkbox'> Crud "+Date.now()+"</li>");
-
-							 }
-					
-   }
-
-
-
-						}
+						$(".selectedRec").append("<li data-number='"+c+"' class='item_"+c+" filtroscon'>"+todesJson[d]+"<input style='margin-left:20px' type='checkbox'> Crud "+Date.now()+"</li>");
 
 					}
 
