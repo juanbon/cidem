@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 // VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\LineRequest as StoreRequest;
 use App\Http\Requests\LineRequest as UpdateRequest;
+use App\Models\Recipient;
 
 class RecipientCrudController extends CrudController {
     public function setup() {
@@ -115,4 +116,26 @@ class RecipientCrudController extends CrudController {
         // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
     }
+
+
+
+    public function getRecipients(){
+
+
+        $data = array();
+//      $data = Recipient::all()->toArray();
+
+        foreach (Recipient::all()->toArray() as $key => $value) {
+            $data[$value['id']] = $value['name'];
+        }
+
+        echo json_encode(array(
+            "status"   => "ok",
+            "data"     => $data
+        ));
+
+        exit; 
+    }
+
+
 }
