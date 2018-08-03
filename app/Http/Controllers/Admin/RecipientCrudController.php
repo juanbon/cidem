@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-
-// VALIDATION: change the requests to match your own file names if you need form validation
-use App\Http\Requests\LineRequest as StoreRequest;
-use App\Http\Requests\LineRequest as UpdateRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\RecipientRequest as StoreRequest;
+use App\Http\Requests\RecipientRequest as UpdateRequest;
+use App\PermissionsRecipients;
 use App\Models\Recipient;
 
 class RecipientCrudController extends CrudController {
@@ -101,6 +101,7 @@ class RecipientCrudController extends CrudController {
     
     public function store(StoreRequest $request)
     {
+
         // your additional operations before save here
         $redirect_location = parent::storeCrud($request);
         // your additional operations after save here
@@ -119,20 +120,33 @@ class RecipientCrudController extends CrudController {
 
 
 
-    public function getRecipients(){
+    public function getRecipients(Request $request){
 
 
         $data = array();
-//      $data = Recipient::all()->toArray();
 
         foreach (Recipient::all()->toArray() as $key => $value) {
             $data[$value['id']] = $value['name'];
         }
 
-        echo json_encode(array(
+
+        $dumm = array(
             "status"   => "ok",
             "data"     => $data
-        ));
+        );
+
+
+        if(!empty($request->id)){
+
+
+            $todes = PermissionsRecipients::where("user_id",$request->id)->get()->toArray();
+                
+            $dumm["permisos"] = $todes;
+
+        }
+
+
+        echo json_encode($dumm);
 
         exit; 
     }

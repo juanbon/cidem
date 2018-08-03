@@ -47,8 +47,13 @@ class LineCrudController extends CrudController {
             'name' => 'name',
             'type' => 'text'
         ]);
-
-
+        /*
+       $this->crud->addField([
+            'label' => 'Nombre',
+            'name' => 'name2',
+            'type' => 'texto'
+        ]);
+*/
         $this->crud->addField([
             'label' => 'Instituci&oacute;n Convocante',
             'name' => 'institucion',

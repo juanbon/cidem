@@ -67,7 +67,7 @@
 <script>
 $(document).ready(function(){
 
-
+/*
 	$('<input>').attr({
 	    type: 'hidden',
 	    id: 'valuejson',
@@ -75,6 +75,14 @@ $(document).ready(function(){
 	    name: 'valuejson'
 	}).appendTo('body');
 
+
+	$('<input>').attr({
+	    type: 'hidden',
+	    id: 'checkeados',
+	    class: 'checkeados',
+	    name: 'checkeados'
+	}).appendTo('body');
+*/
 
     var request = $.ajax({
       url: '{{ URL::to('/') }}/admin/ajax/getRecipients',
@@ -87,7 +95,8 @@ $(document).ready(function(){
 
 		if(obj.status == "ok"){
 
-		$(".valuejson").val(JSON.stringify(obj.data));	
+
+		$('input[name="valuejson"]').val(JSON.stringify(obj.data));	
 
 
 		arrayIn = "";
@@ -98,7 +107,7 @@ $(document).ready(function(){
 
 		});
 
-		$(".checklist_dependency").append('<div class="row" style="margin-top: 12px;"> <div class="col-xs-12"> <label>Permiso sobre destinatarios</label> </div><div class="hidden_fields_secondary" data-name="permissions"> </div><div class="col-xs-12"><select onclick="AcadePermi(this)" class="selectorPermi" multiple="" name="status" style="    width: 100%;margin-top: 10px;min-height: 132px;" class="form-control select2_from_array destinatary">'+arrayIn+'</select></div><div class="col-xs-12" style="margin-top: 10px;"><ul class="selectedRec" style="margin-left: -16px;margin-top: 5px;"></ul></div></div>');
+		$(".checklist_dependency").append('<div class="row" style="margin-top: 12px;"> <div class="col-xs-12"> <label>Permiso sobre destinatarios</label> </div><div class="hidden_fields_secondary" data-name="permissions"> </div><div class="col-xs-12"><select onclick="AcadePermi(this)" class="selectorPermi" multiple="" name="selectorPermi" style="    width: 100%;margin-top: 10px;min-height: 132px;" class="form-control select2_from_array destinatary">'+arrayIn+'</select></div><div class="col-xs-12" style="margin-top: 10px;"><span style="font-weigth:bold !important;display:none"  class="templatelimpio"><b>Marcar sobre cual se podra editar, eliminar. (CRUD) </b></span><br><ul class="selectedRec" style="margin-left: -16px;margin-top: 5px;"></ul></div></div>');
 
 
 		}
@@ -106,38 +115,52 @@ $(document).ready(function(){
 
 });
 
-/*
-
-<div class="col-sm-4"> <div class="checkbox"> <label> <input type="checkbox" class="secondary_list" data-id="1" label="Permiso" name="permissions_show[]" entity="permissions" entity_primary="roles" attribute="name" model="Backpack\PermissionManager\app\Models\Permission" pivot="1" number_columns="3" value="1">activar acciones (CRUD)</label> </div></div>
-
-*/
-
-console.log("una prueba ddasda dasdasdas dfasjfasdkfjsafsdf ");
 
 
 });
 
 
+
+function setCh(p){
+
+
+	var todesto = [];
+
+	$.each($(".checkers"),function(g,h){
+
+		if($(this).is(':checked')){
+
+			todesto.push($(this).data("estachk"));
+
+		}			
+
+	});
+
+
+	$('input[name="checkeados"]').val(JSON.stringify(todesto));
+
+}
+
+
+
 function AcadePermi(e){
 
 
-
-todesJson = JSON.parse($(".valuejson").val());
-
-
-	// $(".selectedRec").html("");
-
-
-	console.log($(e).val());
+todesJson = JSON.parse($('input[name="valuejson"]').val());
 
 
  if($(e).val()){
+
+
+ 			$(".templatelimpio").show();
+ 			$(".templatelimpio").css("font-weigth","bold");
 
 
 			if($(e).val().legth != 0){
 				
 				opciones = $(e).val();
 
+				$('input[name="itemselected"]').val(JSON.stringify(opciones));
 
 				$.each($(".filtroscon"),function(e,f){
 
@@ -157,18 +180,81 @@ todesJson = JSON.parse($(".valuejson").val());
 
 					 if(!$('.item_'+c).length ){
 
-						$(".selectedRec").append("<li data-number='"+c+"' class='item_"+c+" filtroscon'>"+todesJson[d]+"<input style='margin-left:20px' type='checkbox'> Crud "+Date.now()+"</li>");
+						$(".selectedRec").append("<li data-number='"+c+"' class='item_"+c+" filtroscon'>"+todesJson[d]+"<input onclick='setCh(this)' class='checkers miniche_"+d+"' data-estachk='"+d+"' style='margin-left:20px' type='checkbox'></li>");
 
 					}
 
 				});
 
-			}
 
+
+
+// Si una opcion se deselecciono se quita del array d marcados 
+
+
+if($('input[name="checkeados"]').val() !=""){
+
+
+				pasada = JSON.parse($('input[name="checkeados"]').val());
+
+				if(pasada.length > 0){
+
+				var pasada = JSON.parse($('input[name="checkeados"]').val()); 
+
+				var pasada2 = pasada;
+
+				$.each(pasada,function(j,k){
+
+					if(k){
+
+
+						if(!opciones.includes(k.toString())){
+
+
+								var index = pasada2.indexOf(parseInt(k));
+								if (index > -1) {
+								  pasada2.splice(index, 1);
+								}
+
+						}
+
+					}
+
+
+				});
+
+
+
+
+$('input[name="checkeados"]').val(JSON.stringify(pasada2));
+
+
+				if($('input[name="checkeados"]').val() != ""){
+
+
+			var pasada = JSON.parse($('input[name="checkeados"]').val());
+
+					$.each(pasada,function(h,i){
+
+						$(".miniche_"+i).prop('checked', true);
+
+					});
+
+				}
+
+}
+
+}
+
+
+
+			}
 
 	}else{
 
+		$(".templatelimpio").hide();
 		$(".selectedRec").html("");
+		$('input[name="checkeados"]').val("");
 
 	}
 

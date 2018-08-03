@@ -31,7 +31,7 @@ Route::group(['middleware' => ['role:super-admin']], function () {
 
 Route::get('admin/line/{id}/preview', 'LineController@index');
 Route::get('admin/ajax/getUser', 'admin\UserCrudController@getUser');
-Route::get('admin/ajax/getRecipients', 'admin\RecipientCrudController@getRecipients');
+Route::get('admin/ajax/getRecipients/{id?}', 'admin\RecipientCrudController@getRecipients');
 Route::post('admin/ajax/UpdateUser', 'admin\UserCrudController@updateUser');
 
 // Solo accedido por el Admin  ['role:admin'],

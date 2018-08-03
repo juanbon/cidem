@@ -6,6 +6,10 @@ use Illuminate\Http\Request as StoreRequest;
 
 trait Create
 {
+
+
+    public $devolver =[];
+
     /**
      * Show the form for creating inserting a new row.
      *
@@ -34,6 +38,8 @@ trait Create
      */
     public function storeCrud(StoreRequest $request = null)
     {
+
+
         $this->crud->hasAccessOrFail('create');
 
         // fallback to global request instance
@@ -58,6 +64,22 @@ trait Create
         // save the redirect choice for next time
         $this->setSaveAction();
 
-        return $this->performSaveAction($item->getKey());
+
+        if(\Request::route()->getName() == "crud.user.store"){
+
+
+        $this->devolver[0] = $this->performSaveAction($item->getKey());
+        $this->devolver[1] = $item->id;
+
+        return $this->devolver;
+
+        }else{
+
+            return $this->performSaveAction($item->getKey());
+
+        }
+
+
+
     }
 }

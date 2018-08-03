@@ -52,6 +52,9 @@ class RegisterController extends \Backpack\Base\app\Http\Controllers\Auth\Regist
         $this->validator($request->all())->validate();
         
         $this->create($request->all());
+
+       // show a success message
+       \Alert::success("Usuario agregado correctamente!")->flash();
     
         return redirect(backpack_url('login'));
     }

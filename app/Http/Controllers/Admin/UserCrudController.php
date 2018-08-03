@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\PermissionsRecipients;
 use Illuminate\Http\Request;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Requests\CrudRequest;
@@ -29,6 +30,9 @@ class UserCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix').'/user');
         
         // Columns.
+// 
+
+
         $this->crud->setColumns([
             [
                 'name'  => 'name',
@@ -79,13 +83,33 @@ class UserCrudController extends CrudController
             ],
         ]);
         
-        // Fields
-        
+        // Fields checkeados
+
         $this->crud->addFields([
             [
                 'name'  => 'name',
                 'label' => trans('backpack::permissionmanager.name'),
                 'type'  => 'text',
+            ],
+            [
+                'name'  => 'valuejson',
+                'label' => 'valuejson',
+                'type'  => 'hidden',
+            ],
+            [
+                'name'  => 'temporal',
+                'label' => 'temporal',
+                'type'  => 'hidden',
+            ],
+            [
+                'name'  => 'checkeados',
+                'label' => 'checkeados',
+                'type'  => 'hidden',
+            ],
+            [
+                'name'  => 'itemselected',
+                'label' => 'itemselected',
+                'type'  => 'hidden',
             ],
             [
                 'name' => 'surname',
@@ -159,11 +183,44 @@ class UserCrudController extends CrudController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreRequest $request)
+    //          CrudRequest
+    public function store(Request $request)
     {
+
+
         $this->handlePasswordInput($request);
-        
-        return parent::storeCrud($request);
+
+        $f = parent::storeCrud($request);
+
+        if(!empty($request->itemselected)){
+
+            $ma = json_decode($request->itemselected);
+
+            foreach ($ma as $key => $value) {
+
+                $ch = 0;
+
+                if(!empty(json_decode($request->checkeados))){
+
+                    $rom = json_decode($request->checkeados);
+
+                    if (in_array($value, $rom)) {
+                        $ch = 1;
+                    }
+                }
+
+                $permreci               = new PermissionsRecipients();
+                $permreci->user_id      = $f[1];
+                $permreci->recipient_id = $value;
+                $permreci->actions      = $ch;
+                $permreci->save();
+         
+            }
+
+        }
+
+        return $f[0];
+
     }
     
     /**
@@ -175,9 +232,54 @@ class UserCrudController extends CrudController
      */
     public function update(UpdateRequest $request)
     {
+
+
         $this->handlePasswordInput($request);
-        
-        return parent::updateCrud($request);
+        $a = parent::updateCrud($request);
+
+        $delet = PermissionsRecipients::where("user_id",$request->id);
+        $delet->delete();
+
+
+        if(!empty($request->itemselected)){
+
+            $ma = json_decode($request->itemselected);
+
+
+            foreach ($ma as $key => $value) {
+
+                $ch = 0;
+
+                if(!empty($request->checkeados)){
+
+                    if(!empty(json_decode($request->checkeados))){
+
+                        $rom = json_decode($request->checkeados);
+
+                        if (in_array($value, $rom)) {
+                            $ch = 1;
+                        }
+                    }
+
+                }
+
+
+                $permreci               = new PermissionsRecipients();
+                $permreci->user_id      = $request->id;
+                $permreci->recipient_id = $value;
+                $permreci->actions      = $ch;
+                $permreci->save();
+         
+            }
+
+        }
+
+
+
+
+
+        return $a; 
+
     }
     
 
@@ -224,16 +326,21 @@ class UserCrudController extends CrudController
      *
      * @param CrudRequest $request
      */
-    protected function handlePasswordInput(CrudRequest $request)
+    protected function handlePasswordInput(Request $request)
     {
-        // Remove fields not present on the user.
-        $request->request->remove('password_confirmation');
+
+    // Remove fields not present on the user.
+    //   $request->remove('password_confirmation');
+     unset($request['password_confirmation']);
         
         // Encrypt password if specified.
-        if ($request->input('password')) {
-            $request->request->set('password', bcrypt($request->input('password')));
+        if ($request->password) {
+            //   $request->set('password', bcrypt($request->input('password')));
+            $request['password'] = bcrypt($request->password);
+
         } else {
-            $request->request->remove('password');
+                unset($request['password']);
         }
+
     }
 }
