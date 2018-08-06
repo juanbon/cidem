@@ -234,9 +234,11 @@ class UserCrudController extends CrudController
     {
 
 
-
-
-
+/*
+Arreglar asignacion de usuario a rol **********
+dd($request->all());
+exit; 
+*/
 
         $this->handlePasswordInput($request);
         $a = parent::updateCrud($request);
