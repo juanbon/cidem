@@ -234,6 +234,10 @@ class UserCrudController extends CrudController
     {
 
 
+
+
+
+
         $this->handlePasswordInput($request);
         $a = parent::updateCrud($request);
 
