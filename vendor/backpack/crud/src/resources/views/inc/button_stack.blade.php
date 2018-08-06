@@ -7,7 +7,15 @@
 			  {!! $crud->model->{$button->content}($crud); !!}
 		@endif
 	  @else
+
+	  <?php if((\Request::route()->getName() == "crud.lines.search") && ($button->name=="preview") ){?>
+
 		@include($button->content, ['button' => $button])
+	  
+	<?php }elseif(($button->name!="preview")){ ?>	
+
+@include($button->content, ['button' => $button])
+<?php }?>
 	  @endif
 	@endforeach
 @endif
