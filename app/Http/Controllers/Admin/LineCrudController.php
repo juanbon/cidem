@@ -84,10 +84,10 @@ class LineCrudController extends CrudController {
             'label' => 'Destinatarios',
             'type' => 'select2_multiple',
             'name' => 'recipients', // the method that defines the relationship in your Model
-            'entity' => 'line_recipient', // the method that defines the relationship in your Model
-            'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\Models\Recipient", // foreign key model
-            'pivot' => true, // on create&update, do you need to add/delete pivot table entries
+        //  'entity' => 'line_recipient', // the method that defines the relationship in your Model
+        //  'attribute' => 'name', // foreign key attribute that is shown to user
+        //  'model' => "App\Models\Recipient", // foreign key model
+        //  'pivot' => true, // on create&update, do you need to add/delete pivot table entries
         ]);
         
         $this->crud->addField([

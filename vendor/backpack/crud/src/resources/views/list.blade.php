@@ -301,3 +301,27 @@ $(document).ready(function(){
 
 } ?>
 
+<style>
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+display: none !important;
+}
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child {
+    position: relative;
+    padding-left: 15px !important;
+    cursor: pointer;
+}
+</style>
+<script>
+$(document).ready(function(){
+
+
+$('td:first-child').bind("click",function(event){
+    event.stopPropagation();
+    
+});
+
+
+});
+</script>  
+
+

@@ -147,8 +147,23 @@ class RecipientCrudController extends CrudController {
 
 
         echo json_encode($dumm);
-
         exit; 
+    }
+
+
+
+
+    public function getRecipientsbyUser(Request $request){
+
+
+        $users = PermissionsRecipients::join('recipients', 'permissions_recipients.recipient_id', '=', 'recipients.id')
+            ->where('permissions_recipients.user_id',$request->id)
+            ->select('recipients.*')
+            ->get();
+
+        echo json_encode(array("status"=>"ok","data"=>$users->toArray()));
+         exit; 
+
     }
 
 

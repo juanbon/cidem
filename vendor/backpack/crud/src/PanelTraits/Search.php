@@ -252,6 +252,19 @@ trait Search
             $rows[] = $this->getRowViews($row, $startIndex === false ? false : ++$startIndex);
         }
 
+/*
+        foreach ($rows as $key => $value) {
+         
+        //    $rows[$keys][0]
+
+            $r = explode("<span>",$rows[$key][0]);
+
+            $rows[$key][0]= "<span>".$r[(count($r)-1)];
+
+        }
+
+*/
+
         return [
             'draw'            => (isset($this->request['draw']) ? (int) $this->request['draw'] : 0),
             'recordsTotal'    => $totalRows,

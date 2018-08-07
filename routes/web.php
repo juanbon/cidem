@@ -33,6 +33,8 @@ Route::get('admin/line/{id}/preview', 'LineController@index');
 Route::get('admin/ajax/getUser', 'Admin\UserCrudController@getUser');
 Route::get('admin/ajax/getRecipients/{id?}', 'Admin\RecipientCrudController@getRecipients');
 Route::post('admin/ajax/UpdateUser', 'admin\UserCrudController@updateUser');
+Route::get('admin/ajax/getRecipientsbyUser/{id?}', 'Admin\RecipientCrudController@getRecipientsbyUser');
+
 
 // Solo accedido por el Admin  ['role:admin'],
 

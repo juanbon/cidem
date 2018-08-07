@@ -261,5 +261,69 @@ $('input[name="checkeados"]').val(JSON.stringify(pasada2));
 }
 
 </script>
-<?php }  ?>
+<?php }elseif(\Request::route()->getName() == "crud.lines.create"){  ?>
+
+<style>
+
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+
+
+    var request = $.ajax({
+      url: '{{ URL::to('/') }}/admin/ajax/getRecipientsbyUser',
+      method: "GET",
+      data: { id:{{ Auth::user()->id }} },
+      dataType: "json"
+    });
+     
+    request.done(function( obj ) {
+
+
+		if(obj.status == "ok"){
+
+
+		  if(obj.data){
+
+				todes = "";
+
+				$.each(obj.data,function(g,h){
+
+
+				todes+= '<option value="'+h.id+'">'+h.name+'</option>';	
+
+
+				});
+
+				console.log(todes);
+
+
+			//	$('input[name="valuejson"]').val(JSON.stringify(obj.data));	
+
+
+				men = $('.select2_multiple')[0]
+
+				$(men).append(todes);
+
+ 		 }
+
+
+		}
+
+
+});
+
+
+
+
+
+});
+
+
+</script>	
+
+<?php } ?>
 @endsection
