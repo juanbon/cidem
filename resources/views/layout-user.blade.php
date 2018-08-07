@@ -74,7 +74,7 @@
 
 							<?php /* <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>  */ ?>
 
-<a class="navbar-item" href="http://localhost:8000/admin/logout"><i class="fa fa-btn fa-sign-out"></i> Salir</a>
+<a class="navbar-item" href="{{ URL::to('/')}}/admin/logout"><i class="fa fa-btn fa-sign-out"></i> Salir</a>
 
  
 					  
