@@ -113,7 +113,32 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
 
+
+      setTimeout(function(){ 
+
+        $('td:first-child').attr("onclick","event.stopPropagation();");
+        $('td:first-child').css("cursor","text");
+
+         }, 800);
+
       crud.table = $("#crudTable").DataTable(crud.dataTableConfiguration);
+
+
+      //  * Deshabilito el boton
+
+      crud.table.on( 'search.dt', function () {
+          
+      setTimeout(function(){ 
+
+        $('td:first-child').attr("onclick","event.stopPropagation();");
+        $('td:first-child').css("cursor","text");
+
+         }, 800);
+
+      });
+
+
+      //   Boton 
 
       // override ajax error message
       $.fn.dataTable.ext.errMode = 'none';

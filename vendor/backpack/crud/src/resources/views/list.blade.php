@@ -315,10 +315,33 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child, table.
 $(document).ready(function(){
 
 
+/*
+
+var table = $('table').DataTable();
+ 
+table.on( 'search.dt', function () {
+    
+console.log("limpiado");
+
+  $('td:first-child').on("click",function(event){
+      event.stopPropagation();
+      
+  });
+
+});
+
+*/
+
+
+
+/*
+
 $('td:first-child').bind("click",function(event){
     event.stopPropagation();
     
 });
+
+*/
 
 
 });
