@@ -84,6 +84,66 @@ $(document).ready(function(){
 	}).appendTo('body');
 */
 
+//  Aca se insertan los ajax 
+
+
+$(".checklist_dependency").append('<div class="row ajax_dinamic" style="margin-top: 12px;"></div>');
+
+/*
+
+$('input[name="roles_show[]"]').on("click",function(){
+	
+	$(".selectorPermi").prop("disabled",false);
+	
+	if( ($(this).val()=="4")&&($(this).is(':checked') ) ){
+	 
+    generarrecipient(true);
+
+	
+	}else{
+	
+	$(".selectorPermi").parent().prev().prev().children().html("Permiso sobre destinatarios");
+
+	$(".selectorPermi").prop("disabled",false);
+	}
+	
+	});
+
+*/
+
+
+
+	// Solo se realiza un check 
+
+	$("input:checkbox").on('click', function() {
+	  // in the handler, 'this' refers to the box clicked on
+	  var $box = $(this);
+	  if ($box.is(":checked")) {
+	    // the name of the box is retrieved using the .attr() method
+	    // as it is assumed and expected to be immutable
+	    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+	    // the checked state of the group/box on the other hand will change
+	    // and the current value is retrieved using .prop() method
+	    $(group).prop("checked", false);
+	    $box.prop("checked", true);
+	  } else {
+	    $box.prop("checked", false);
+	  }
+	});
+
+
+generarrecipient(false);
+
+
+
+});
+
+
+
+function generarrecipient(flag){
+
+
+
     var request = $.ajax({
       url: '{{ URL::to('/') }}/admin/ajax/getRecipients',
       method: "GET",
@@ -107,7 +167,7 @@ $(document).ready(function(){
 
 		});
 
-		$(".checklist_dependency").append('<div class="row" style="margin-top: 12px;"> <div class="col-xs-12"> <label>Permiso sobre destinatarios</label> </div><div class="hidden_fields_secondary" data-name="permissions"> </div><div class="col-xs-12"><select onclick="AcadePermi(this)" class="selectorPermi" multiple="" name="selectorPermi" style="    width: 100%;margin-top: 10px;min-height: 132px;" class="form-control select2_from_array destinatary">'+arrayIn+'</select></div><div class="col-xs-12" style="margin-top: 10px;"><span style="font-weigth:bold !important;display:none"  class="templatelimpio"><b>Marcar sobre cual se podra editar, eliminar. (CRUD) </b></span><br><ul class="selectedRec" style="margin-left: -16px;margin-top: 5px;"></ul></div></div>');
+		$(".ajax_dinamic").html('<div class="col-xs-12"> <label>Permiso sobre destinatarios</label> </div><div class="hidden_fields_secondary" data-name="permissions"> </div><div class="col-xs-12"><select onclick="AcadePermi(this)" class="selectorPermi" multiple="" name="selectorPermi" style="    width: 100%;margin-top: 10px;min-height: 132px;" class="form-control select2_from_array destinatary">'+arrayIn+'</select></div><div class="col-xs-12" style="margin-top: 10px;"><span style="font-weigth:bold !important;display:none"  class="templatelimpio"><b>Marcar sobre cual se podra editar, eliminar. (CRUD) </b></span><br><ul class="selectedRec" style="margin-left: -16px;margin-top: 5px;"></ul></div>');
 
 
 		}
@@ -116,9 +176,23 @@ $(document).ready(function(){
 });
 
 
+if(flag){
 
-});
 
+	setTimeout(function(){ 	$(".selectorPermi").prop("disabled",true); 
+
+$(".selectorPermi").parent().prev().prev().children().append("<span style='font-weigth:400'> - (El rol 'Publico' no permite manejo de destinarios</span>)");
+
+}, 600);
+
+
+
+}
+
+
+
+
+}
 
 
 function setCh(p){
@@ -293,7 +367,7 @@ $(document).ready(function(){
 				$.each(obj.data,function(g,h){
 
 
-				todes+= '<option value="'+h.id+'">'+h.name+'</option>';	
+				todes+= '<option class="fa_'+h.id+'" value="'+h.id+'">'+h.name+'</option>';	
 
 
 				});

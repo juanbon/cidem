@@ -52,6 +52,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'namespace' => 'Ad
 
 // Redirecciona por el admin
 
+Route::get('home', 'Admin\dashboardcontroller@index'); // ->middleware('role:admin');
 Route::get('admin/home', 'Admin\dashboardcontroller@index'); // ->middleware('role:admin');
 Route::get('admin/dashboard', 'Admin\dashboardcontroller@index'); // ->middleware('role:admin');
 Route::post('admin/register', 'Auth\RegisterController@register');

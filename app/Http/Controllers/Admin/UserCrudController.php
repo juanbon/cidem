@@ -188,9 +188,26 @@ class UserCrudController extends CrudController
     {
 
 
+
         $this->handlePasswordInput($request);
 
         $f = parent::storeCrud($request);
+
+
+        if($request->roles_show){
+
+            $rol = $request->roles_show[0];
+
+            \DB::table('model_has_roles')->insert(
+                ['role_id'     => $rol,
+                 'model_id'   => $f[1],
+                 'model_type' => 'App\User'
+                ]
+            );
+
+        }
+
+
 
         if(!empty($request->itemselected)){
 
