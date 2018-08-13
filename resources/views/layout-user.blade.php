@@ -53,9 +53,12 @@
 					      <a class="navbar-item">
 					        Administración
 					      </a>
+
 					      <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}" >
 					        Control de usuario
 					      </a>
+
+
 					       <a class="navbar-item">
 					        	Parámetros
 					        </a>
@@ -70,13 +73,10 @@
 					        <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines') }}">
 					        	Editar fuente
 					        </a>
-
-
-							<?php /* <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>  */ ?>
-
-<a class="navbar-item" href="{{ URL::to('/')}}/admin/logout"><i class="fa fa-btn fa-sign-out"></i> Salir</a>
-
- 
+							
+							<a class="navbar-item" href="{{ URL::to('/')}}/admin/logout">
+								<i class="fa fa-btn fa-sign-out"></i> Salir
+							</a>
 					  
 					    </div>
 					  </div>

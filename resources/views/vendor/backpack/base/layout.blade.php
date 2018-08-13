@@ -213,31 +213,53 @@ if (!\Request::is('admin/login')) {
                 <a class="navbar-item">
                   Administración
                 </a>
-                <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}">
+
+             <?php  $user = \Auth::user();
+
+                  $ispublic = true; 
+
+
+                  if(!empty($user)){
+
+                    if((!$user->hasRole('admin') )||(!$user->hasRole('user') )||(!$user->hasRole('editor') )){
+
+                      $ispublic = false; 
+                    
+                    }
+
+                  }
+
+                ?>
+
+
+                <a class="navbar-item" href="{{ (!$ispublic)?'/admin/my_profile':url(config('backpack.base.route_prefix', 'admin') . '/user') }}">
                   Control de usuario
                 </a>
-                 <a class="navbar-item">
-                    Parámetros
-                  </a>
+
+                  @if($ispublic)
+
                    <a class="navbar-item">
-                    Vista - Usuarios
+                      Parámetros
+                    </a>
+                     <a class="navbar-item">
+                      Vista - Usuarios
+                    </a>
+                  <hr class="navbar-divider">
+                  <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines/create') }}">
+                    Nueva fuente
                   </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines/create') }}">
-                  Nueva fuente
-                </a>
-                
+
+                  @endif
+             
                   <a class="navbar-item" href="{{ url(config('backpack.base.route_prefix', 'admin') . '/lines') }}" >
-                    Editar fuente
+                    {{ ($ispublic)?"Editar fuente":"Ver fuentes" }}
                   </a>
 
 
               <?php /* <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>  */ ?>
 
-<a class="navbar-item" href="http://localhost:8000/admin/logout"><i class="fa fa-btn fa-sign-out"></i> Salir</a>
+                <a class="navbar-item" href="http://localhost:8000/admin/logout"><i class="fa fa-btn fa-sign-out"></i> Salir</a>
 
- 
-            
               </div>
             </div>
           </nav>
@@ -247,10 +269,6 @@ if (!\Request::is('admin/login')) {
     </div>
   </div>
 </header>
-
-
-
-
 
       <?php  }
 

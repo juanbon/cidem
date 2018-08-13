@@ -1,6 +1,7 @@
 <?php
 
 namespace Backpack\CRUD\app\Http\Controllers\Operations;
+use App\Models\Area;
 
 trait ListEntries
 {
@@ -38,6 +39,38 @@ trait ListEntries
             // recalculate the number of filtered rows
             $filteredRows = $this->crud->count();
         }
+
+
+
+        // Si es usuario publico setea una query
+
+        $user = \Auth::user();
+
+       if((!$user->hasRole('admin') )&&(!$user->hasRole('user') )&&(!$user->hasRole('editor') )){
+
+
+
+        $dataArea = \DB::table('area_line')
+                ->select('area_line.line_id')
+                ->join('area_user', 'area_user.area_id', '=', 'area_line.area_id')
+                ->where('area_user.user_id',$user->id )
+                ->get()
+                ->toArray();
+
+        $are = array();
+
+        foreach ($dataArea as $key2 => $value2) {
+          array_push($are,$value2->line_id);
+        }
+
+        
+        $this->crud->addClause('wherein', 'id',$are);
+
+       
+       }
+
+
+
         // start the results according to the datatables pagination
         if ($this->request->input('start')) {
             $this->crud->skip($this->request->input('start'));
@@ -58,6 +91,14 @@ trait ListEntries
                 $this->crud->orderBy($column['name'], $column_direction);
             }
         }
+
+
+
+
+//dd($this->crud->query->getQuery()); 
+
+
+
         $entries = $this->crud->getEntries();
 
         return $this->crud->getEntriesAsJsonForDatatables($entries, $totalRows, $filteredRows, $startIndex);

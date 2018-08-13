@@ -12,9 +12,23 @@ use Backpack\PermissionManager\app\Http\Requests\UserUpdateCrudRequest as Update
 
 class UserCrudController extends CrudController
 {
+
+
     public function setup()
     {
 
+        /*
+
+           $user = \Auth::user();
+
+           if((!$user->hasRole('admin'))||((!$user->hasRole('user')))||((!$user->hasRole('editor'))))  {
+
+             return redirect()->action('Admin\UserCrudController@edit',['id'=>$user->id]);  
+             exit; 
+
+            }
+
+        */
         /*
         var_dump(User::statusArray()); 
         exit;
@@ -285,6 +299,8 @@ exit;
                     }
 
                 }
+
+                //  Para usuario admin, puede editarse las areas seleccionadas
 
 
                 $permreci               = new PermissionsRecipients();

@@ -29,12 +29,29 @@ Route::group(['middleware' => ['role:super-admin']], function () {
 
 
 
+Route::get('admin/user',function(){
+
+		$user = \Auth::user();
+
+	  if((!$user->hasRole('admin'))||((!$user->hasRole('user')))||((!$user->hasRole('editor'))))  {
+
+			
+
+			return redirect("admin/user/".$user->id."/edit");
+
+		}
+
+	} 
+);
+
+
 Route::get('admin/line/{id}/preview', 'LineController@index');
 Route::get('admin/ajax/getUser', 'Admin\UserCrudController@getUser');
 Route::get('admin/ajax/getRecipients/{id?}', 'Admin\RecipientCrudController@getRecipients');
 Route::post('admin/ajax/UpdateUser', 'admin\UserCrudController@updateUser');
 Route::get('admin/ajax/getRecipientsbyUser/{id?}', 'Admin\RecipientCrudController@getRecipientsbyUser');
-
+Route::get('admin/my_profile', ['uses'=>'Admin\accountController@my_profile']);
+Route::post('admin/my_profile', ['uses'=>'Admin\accountController@UpdateAreasUser']);
 
 // Solo accedido por el Admin  ['role:admin'],
 
@@ -56,6 +73,7 @@ Route::get('home', 'Admin\dashboardcontroller@index'); // ->middleware('role:adm
 Route::get('admin/home', 'Admin\dashboardcontroller@index'); // ->middleware('role:admin');
 Route::get('admin/dashboard', 'Admin\dashboardcontroller@index'); // ->middleware('role:admin');
 Route::post('admin/register', 'Auth\RegisterController@register');
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'App\Http\Middleware\AdminMiddleware'], function() {
     Route::post('login', 'Auth\LoginController@login');

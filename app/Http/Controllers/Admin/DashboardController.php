@@ -29,8 +29,10 @@ class dashboardcontroller extends Controller
         
         if($user->hasRole('admin'))
             return view('dashboard');
-        else
+        elseif($user->hasRole('user'))
            return view('dashboard-user'); 
+       else
+        return \Redirect::to('/admin/lines');
     }
 
     /**
@@ -40,7 +42,7 @@ class dashboardcontroller extends Controller
      */
     public function create()
     {
-         echo "dasdasdas";
+      //   echo "dasdasdas";
     }
 
     /**

@@ -8,14 +8,25 @@
 		@endif
 	  @else
 
-	  <?php if((\Request::route()->getName() == "crud.lines.search") && ($button->name=="preview") ){?>
+	  <?php 
+
+	   $user = \Auth::user();
+
+	  if((\Request::route()->getName() == "crud.lines.search") && ($button->name=="preview") ){?>
 
 		@include($button->content, ['button' => $button])
 	  
-	<?php }elseif(($button->name!="preview")){ ?>	
+	<?php }elseif(($button->name!="preview")){ 
 
-@include($button->content, ['button' => $button])
-<?php }?>
-	  @endif
-	@endforeach
-@endif
+		 if(($user->hasRole('admin'))||(($user->hasRole('user')))||(($user->hasRole('editor'))))  {
+		?>	
+
+		@include($button->content, ['button' => $button])
+
+		<?php
+
+		}
+		 }?>
+			  @endif
+			@endforeach
+		@endif
